@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('viagems', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->enum('pagamento', ['Débito', 'Pix', 'Crédito']);
+            $table->foreign('orcamento_id')->references('id')->on('orcamentos')->onDelete('restrict');
         });
     }
 

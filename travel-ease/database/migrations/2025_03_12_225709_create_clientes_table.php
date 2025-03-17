@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('nome', 100);
+            $table->integer('cpf')->unique();
+            $table->integer('telefone');
+            $table->text('endereco');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
         });
     }
 
