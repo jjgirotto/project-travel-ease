@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('pacote_viagems', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->text('passeios');
+            $table->text('restaurantes');
+            $table->foreign('orcamento_id')->references('id')->on('orcamentos')->onDelete('restrict');
         });
     }
 
