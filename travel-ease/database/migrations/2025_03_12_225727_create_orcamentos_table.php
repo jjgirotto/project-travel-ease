@@ -19,11 +19,12 @@ return new class extends Migration
             $table->integer('estadia');
             $table->integer('viajantes');
             $table->boolean('acomodacao')->default(false);
-            $table->string('preferencia');
-            $table->integer('qtdeMilhas');
-            $table->decimal('valorMilhas', 10,2);
-            $table->decimal('valorTotal', 10,2);
-            $table->boolean('escolhido')->default(false);
+            $table->string('preferencia')->nullable();
+            $table->integer('qtdeMilhas')->nullable();
+            $table->decimal('valorMilhas', 10,2)->nullable();
+            $table->decimal('valorTotal', 10,2)->nullable();
+            $table->boolean('escolhido')->default(false)->nullable();
+            $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('restrict');
         });
     }
