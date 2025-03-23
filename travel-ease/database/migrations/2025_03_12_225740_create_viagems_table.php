@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->enum('pagamento', ['Débito', 'Pix', 'Crédito']);
+            $table->unsignedBigInteger('orcamento_id');
             $table->foreign('orcamento_id')->references('id')->on('orcamentos')->onDelete('restrict');
         });
     }

@@ -16,8 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->date('checkin');
             $table->date('checkout');
-            $table->string('aeroIrigem', 100);
+            $table->string('aeroOrigem', 100);
             $table->string('aeroDestino', 100);
+            $table->unsignedBigInteger('viagem_id');
             $table->foreign('viagem_id')->references('id')->on('viagems')->onDelete('restrict');
         });
     }
