@@ -10,4 +10,8 @@ class Passagem extends Model
     use HasFactory;
 
     protected $fillable = ['checkin', 'checkout', 'aeroOrigem', 'aeroDestino', 'viagem_id'];
+
+    public function viagem() {
+        return $this->belongsTo(Viagem::class);
+    }
 }
