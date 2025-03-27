@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('passeios');
             $table->text('restaurantes');
             $table->unsignedBigInteger('orcamento_id');
-            $table->foreign('orcamento_id')->references('id')->on('orcamentos')->onDelete('restrict');
+            $table->foreign('orcamento_id')->references('id')->on('orcamentos')->onDelete('cascade');
         });
     }
 

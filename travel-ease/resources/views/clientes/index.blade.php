@@ -41,8 +41,8 @@
                     <td>{{ $c->endereco }}</td>
                     <td>{{ $c->telefone }}</td>
                     <td>
-                        <a href="#" class="btn btn-warning">Editar</a>
-                        <a href="#" class="btn btn-info">Consultar</a>
+                        <a href="/clientes/{{ $c->id }}/edit/" class="btn btn-warning">Editar</a>
+                        <a href="/clientes/{{ $c->id }}/" class="btn btn-info">Consultar</a>
                     </td>
                 </tr>
             @endforeach

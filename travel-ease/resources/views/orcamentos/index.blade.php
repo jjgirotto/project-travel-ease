@@ -45,8 +45,8 @@
                     <td>{{ $o->valorTotal }}</td>
                     <td>{{ $o->cliente->nome }}</td>
                     <td>
-                        <a href="#" class="btn btn-warning">Editar</a>
-                        <a href="#" class="btn btn-info">Consultar</a>
+                        <a href="/orcamentos/{{ $o->id }}/edit" class="btn btn-warning">Editar</a>
+                        <a href="/orcamentos/{{ $o->id }}" class="btn btn-info">Consultar</a>
                     </td>
                 </tr>
             @endforeach

@@ -59,8 +59,8 @@
          </div>
 
         <div class="mb-3">
-            <label for="acomodacao" class="form-label">Orçamento escolhido:</label>
-            <input type="checkbox" id="acomodacao" name="acomodacao" class="form-check-input">
+            <label for="escolhido" class="form-label">Orçamento escolhido:</label>
+            <input type="checkbox" id="escolhido" name="escolhido" class="form-check-input">
         </div>
  
          <div class="mb-3">

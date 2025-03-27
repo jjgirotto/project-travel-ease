@@ -50,7 +50,9 @@ class ClienteController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+        $users = User::all();
+        return view("clientes.show", compact('cliente', 'users'));
     }
 
     /**
@@ -58,7 +60,9 @@ class ClienteController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+        $users = User::all();
+        return view("clientes.edit", compact('cliente', 'users'));
     }
 
     /**
@@ -66,7 +70,18 @@ class ClienteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $cliente = Cliente::findOrFail($id);
+            $cliente->update($request->all());
+            return redirect()->route('clientes.index')->with('sucesso', 'Cliente alterado com sucesso!');
+        } catch (Exception $e) {
+            Log::error("erro ao atualizar o cliente: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+	            'cliente_id' => $id,
+	            'request' => $request->all()
+            ]);
+            return redirect()->route('clientes.index')->with('erro','Erro ao editar!');
+        }
     }
 
     /**
@@ -74,6 +89,16 @@ class ClienteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $cliente = Cliente::findOrFail($id);
+            $cliente->delete();
+            return redirect()->route('clientes.index')->with('sucesso', 'Cliente excluído com sucesso!');
+        } catch (Exception $e) {
+            Log::error("erro ao excluir o cliente: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+                'cliente_id' => $id
+            ]);
+            return redirect()->route('produtos.index')->with('erro','Erro ao excluir!');
+        }
     }
 }

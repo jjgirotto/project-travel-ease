@@ -34,6 +34,12 @@ class OrcamentoController extends Controller
     public function store(Request $request)
     {
         try {
+
+            $request->merge([
+                'acomodacao' => $request->has('acomodacao') ? 1 : 0,
+                'escolhido' => $request->has('escolhido') ? 1 : 0,
+            ]);
+
             Orcamento::create($request->all());
             return redirect()->route('orcamentos.index')->with('sucesso', 'Orçamento inserido com sucesso!');
         } catch (Exception $e) {
@@ -50,7 +56,9 @@ class OrcamentoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $orcamento = Orcamento::findOrFail($id); 
+        $clientes = Cliente::all(); 
+        return view("orcamentos.show", compact('orcamento','clientes'));
     }
 
     /**
@@ -58,7 +66,9 @@ class OrcamentoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $orcamento = Orcamento::findOrFail($id); 
+        $clientes = Cliente::all(); 
+        return view("orcamentos.edit", compact('orcamento','clientes'));
     }
 
     /**
@@ -66,7 +76,18 @@ class OrcamentoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $orcamento = Orcamento::findOrFail($id);
+            $orcamento->update($request->all());
+            return redirect()->route('orcamentos.index')->with('sucesso', 'Orcamento alterado com sucesso!');
+        } catch (Exception $e) {
+            Log::error("erro ao atualizar o orcamento: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+	            'orcamento_id' => $id,
+	            'request' => $request->all()
+            ]);
+            return redirect()->route('orcamentos.index')->with('erro','Erro ao editar!');
+        }
     }
 
     /**
@@ -74,6 +95,16 @@ class OrcamentoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $orcamento = Orcamento::findOrFail($id);
+            $orcamento->delete();
+            return redirect()->route('orcamentos.index')->with('sucesso', 'Orcamento excluído com sucesso!');
+        } catch (Exception $e) {
+            Log::error("erro ao excluir o orcamento: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+	            'orcamento_id' => $id
+            ]);
+            return redirect()->route('orcamentos.index')->with('erro','Erro ao excluir!');
+        }
     }
 }

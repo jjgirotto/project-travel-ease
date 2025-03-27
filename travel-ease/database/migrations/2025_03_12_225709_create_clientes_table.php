@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('telefone');
             $table->text('endereco');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
