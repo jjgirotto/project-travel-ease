@@ -25,7 +25,7 @@ return new class extends Migration
             $table->decimal('valorTotal', 10,2)->nullable();
             $table->boolean('escolhido')->default(false)->nullable();
             $table->unsignedBigInteger('cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('restrict');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
         });
     }
 

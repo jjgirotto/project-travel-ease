@@ -51,7 +51,9 @@ class PacoteViagemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pacote = PacoteViagem::findOrFail($id);
+        $orcamentos = Orcamento::all();
+        return view("pacoteViagens.show", compact('pacote', 'orcamentos'));
     }
 
     /**
@@ -59,7 +61,9 @@ class PacoteViagemController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pacote = PacoteViagem::findOrFail($id);
+        $orcamentos = Orcamento::all();
+        return view("pacoteViagens.edit", compact('pacote', 'orcamentos'));
     }
 
     /**
@@ -67,7 +71,18 @@ class PacoteViagemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $pacote = PacoteViagem::findOrFail($id);
+            $pacote->update($request->all());
+            return redirect()->route('pacoteViagens.index')->with('sucesso', 'Pacote de viagem alterado com sucesso!');
+        } catch (Exception $e) {
+            Log::error("erro ao atualizar o pacote de viagem: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+	            'pacote_id' => $id,
+	            'request' => $request->all()
+            ]);
+            return redirect()->route('pacoteViagens.index')->with('erro','Erro ao editar!');
+        }
     }
 
     /**
@@ -75,6 +90,16 @@ class PacoteViagemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $pacote = PacoteViagem::findOrFail($id);
+            $pacote->delete();
+            return redirect()->route('pacoteViagens.index')->with('sucesso', 'Pacote de viagem excluído com sucesso!');
+        } catch (Exception $e) {
+            Log::error("erro ao excluir o pacote de viagem: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+	            'pacote_id' => $id,
+            ]);
+            return redirect()->route('pacoteViagens.index')->with('erro','Erro ao excluir!');
+        }
     }
 }

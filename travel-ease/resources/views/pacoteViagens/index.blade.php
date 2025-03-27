@@ -40,8 +40,8 @@
                     <td>{{ $p->restaurantes }}</td>
                     <td>{{ $p->orcamento->origem }} x {{ $p->orcamento->destino }}: {{ $p->orcamento->cliente->nome }} - CPF: {{ $p->orcamento->cliente->cpf }}</td>
                     <td>
-                        <a href="#" class="btn btn-warning">Editar</a>
-                        <a href="#" class="btn btn-info">Consultar</a>
+                        <a href="/pacoteViagens/{{ $p->id }}/edit/" class="btn btn-warning">Editar</a>
+                        <a href="/pacoteViagens/{{ $p->id }}" class="btn btn-info">Consultar</a>
                     </td>
                 </tr>
             @endforeach
