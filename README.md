@@ -22,7 +22,7 @@ Para utilizar o projeto na sua máquina, é necessário ter as seguintes ferrame
 
 - PHP
 - Composer
-- MySql ou PHPAdmin
+- MySql ou PHPMyAdmin
 
 ## Guia de instalação
 
@@ -57,17 +57,17 @@ As migrações do Laravel criarão automaticamente as tabelas no MySQL. Caso haj
 | Categoria |Método HTTP| Endpoint        | Ação                       |
 |-----------|-----------|-----------------|----------------------------|
 | Cliente   | POST      | /clientes/create| Cadastra um novo cliente   |
-| Cliente   | PUT       | /clientes/{{ id }}/edit/| Altera um cliente  |
-| Cliente   | DELETE    | /clientes/{{ id }}| Consulta e exclui um cliente|
+| Cliente   | PUT       | /clientes/{id}/edit/| Altera um cliente  |
+| Cliente   | DELETE    | /clientes/{id}| Consulta e exclui um cliente|
 | Orçamento | POST      | /orcamentos/create| Cadastra um novo orçamento |
-| Orçamento | PUT       | /orcamentos/{{ id }}/edit/| Altera um orçamento|
-| Orçamento | DELETE    | /orcamentos/{{ id }}| Consulta e exclui um orçamento|
+| Orçamento | PUT       | /orcamentos/{id}/edit/| Altera um orçamento|
+| Orçamento | DELETE    | /orcamentos/{id}| Consulta e exclui um orçamento|
 | Viagem    | POST      | /viagens/create| Cadastra uma nova viagem   |
-| Viagem    | PUT       | /viagens/{{ id }}/edit/| Altera uma viagem  |
-| Viagem    | DELETE    | /viagens/{{ id }}| Consulta e exclui uma viagem|
+| Viagem    | PUT       | /viagens/{id}/edit/| Altera uma viagem  |
+| Viagem    | DELETE    | /viagens/{id}| Consulta e exclui uma viagem|
 | Pacote de viagem | POST | /pacoteViagens/create| Cadastra um novo pacote de viagem |
-| Pacote de viagem | PUT | /pacoteViagens/{{ id }}/edit/| Altera um pacote de viagem|
-| Pacote de viagem | DELETE | /pacoteViagens/{{ id }}| Consulta e exclui um pacote de viagem|
+| Pacote de viagem | PUT | /pacoteViagens/{id}/edit/| Altera um pacote de viagem|
+| Pacote de viagem | DELETE | /pacoteViagens/{id}| Consulta e exclui um pacote de viagem|
 | Passagem  | POST      | /passagens/create| Cadastra uma nova passagem   |
-| Passagem  | PUT       | /passagens/{{ id }}/edit/| Altera uma passagem  |
-| Passagem  | DELETE    | /passagens/{{ id }}| Consulta e exclui uma passagem|
+| Passagem  | PUT       | /passagens/{id}/edit/| Altera uma passagem  |
+| Passagem  | DELETE    | /passagens/{id}| Consulta e exclui uma passagem|
