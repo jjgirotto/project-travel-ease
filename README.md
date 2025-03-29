@@ -7,7 +7,10 @@
 ## Sobre
 O projeto consiste em um sistema web para gerenciamento de viagens e pacotes de viagens. A aplicação é construída com Laravel, um poderoso framework PHP, e utiliza MySQL para gerenciamento de banco de dados relacional. A funcionalidade principal do sistema inclui o registro de clientes, gerenciamento de orçamentos para viagens e compra de passagens. A aplicação também possui um sistema de notificações para alertar os usuários sobre a emissão das passagens.
 
-### Tecnologias utilizadas
+## Modelagem Entidade Relacional
+![Modelagem Entidade Relacional](/image/mer.png)
+
+## Tecnologias utilizadas
 - **PHP**: Uma linguagem de programação amplamente utilizada para desenvolvimento web no lado do servidor.
 - **Laravel**: Um framework PHP para construção de aplicações web modernas com sintaxe elegante, oferecendo recursos integrados como roteamento, autenticação, e gestão de banco de dados.
 - **MySQL**: Sistema de gerenciamento de banco de dados relacional amplamente utilizado para armazenar e gerenciar dados em aplicações web.
