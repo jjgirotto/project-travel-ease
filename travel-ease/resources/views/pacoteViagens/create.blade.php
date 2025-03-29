@@ -22,11 +22,11 @@
         </div>
 
         <div class="mt-3 mb-3">
-             <label for="orcamento_id" class="form-label">Orçamento: </label>
-             <select id="orcamento_id" name="orcamento_id" class="form-select" required="">
-                 @foreach ($orcamentos as $o)
-                     <option value="{{ $o->id }}">
-                         {{ $o->origem }} x {{ $o->destino }}: {{ $o->cliente->nome }} - CPF: {{ $o->cliente->cpf }}
+             <label for="viagem_id" class="form-label">Viagem: </label>
+             <select id="viagem_id" name="viagem_id" class="form-select" required="">
+                 @foreach ($viagens as $v)
+                     <option value="{{ $v->id }}">
+                         {{ $v->orcamento->origem }} x {{ $v->orcamento->destino }}: {{ $v->orcamento->cliente->nome }} - CPF: {{ $v->orcamento->cliente->cpf }}
                      </option>
                  @endforeach
              </select>

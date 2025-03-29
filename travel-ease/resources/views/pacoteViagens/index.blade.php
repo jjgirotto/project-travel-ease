@@ -28,7 +28,7 @@
                 <th>ID</th>
                 <th>Passeios</th>
                 <th>Restaurantes</th>
-                <th>Orçamento</th>
+                <th>Viagem</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -38,7 +38,7 @@
                     <td>{{ $p->id }}</td>
                     <td>{{ $p->passeios }}</td>
                     <td>{{ $p->restaurantes }}</td>
-                    <td>{{ $p->orcamento->origem }} x {{ $p->orcamento->destino }}: {{ $p->orcamento->cliente->nome }} - CPF: {{ $p->orcamento->cliente->cpf }}</td>
+                    <td>{{ $p->viagem->orcamento->origem }} x {{ $p->viagem->orcamento->destino }}: {{ $p->viagem->orcamento->cliente->nome }} - CPF: {{ $p->viagem->orcamento->cliente->cpf }}</td>
                     <td>
                         <a href="/pacoteViagens/{{ $p->id }}/edit/" class="btn btn-warning">Editar</a>
                         <a href="/pacoteViagens/{{ $p->id }}" class="btn btn-info">Consultar</a>

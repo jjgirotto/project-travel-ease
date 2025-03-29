@@ -50,7 +50,9 @@ class PassagemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $passagem = Passagem::findOrFail($id);
+        $viagens = Viagem::all();
+        return view("passagens.show", compact('passagem', 'viagens'));
     }
 
     /**
@@ -58,7 +60,9 @@ class PassagemController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $passagem = Passagem::findOrFail($id);
+        $viagens = Viagem::all();
+        return view("passagens.edit", compact('passagem', 'viagens'));
     }
 
     /**
@@ -66,7 +70,18 @@ class PassagemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $passagem = Passagem::findOrFail($id);
+            $passagem->update($request->all());
+            return redirect()->route('passagens.index')->with('sucesso', 'Passagem alterada com sucesso!');
+        } catch (Exception $e) {
+            Log::error("Erro ao atualizar a passagem: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+	            'passagem_id' => $id,
+	            'request' => $request->all()
+            ]);
+            return redirect()->route('passagens.index')->with('erro','Erro ao editar!');
+        }
     }
 
     /**
@@ -74,6 +89,16 @@ class PassagemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $passagem = Passagem::findOrFail($id);
+            $passagem->delete();
+            return redirect()->route('passagens.index')->with('sucesso', 'Passagem excluída com sucesso!');
+        } catch (Exception $e) {
+            Log::error("Erro ao excluir a passagem: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+	            'passagem_id' => $id
+            ]);
+            return redirect()->route('passagens.index')->with('erro','Erro ao excluir!');
+        }
     }
 }

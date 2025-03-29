@@ -44,8 +44,8 @@
                     <td>{{ $p->aeroDestino }}</td>
                     <td>{{ $p->viagem->orcamento->origem }} x {{ $p->viagem->orcamento->destino }}: {{ $p->viagem->orcamento->cliente->nome }} - CPF: {{ $p->viagem->orcamento->cliente->cpf }}</td>
                     <td>
-                        <a href="#" class="btn btn-warning">Editar</a>
-                        <a href="#" class="btn btn-info">Consultar</a>
+                        <a href="/passagens/{{ $p->id }}/edit" class="btn btn-warning">Editar</a>
+                        <a href="/passagens/{{ $p->id }}" class="btn btn-info">Consultar</a>
                     </td>
                 </tr>
             @endforeach

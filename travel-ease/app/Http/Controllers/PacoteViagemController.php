@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Orcamento;
 use App\Models\PacoteViagem;
+use App\Models\Viagem;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -16,7 +16,7 @@ class PacoteViagemController extends Controller
      */
     public function index()
     {
-        $pacoteViagem = PacoteViagem::with('orcamento')->get();
+        $pacoteViagem = PacoteViagem::with('viagem')->get();
         return view("pacoteViagens.index", compact('pacoteViagem'));
     }
 
@@ -25,8 +25,8 @@ class PacoteViagemController extends Controller
      */
     public function create()
     {
-        $orcamentos = Orcamento::all();
-        return view("pacoteViagens.create", compact("orcamentos"));
+        $viagens = Viagem::all();
+        return view("pacoteViagens.create", compact("viagens"));
     }
 
     /**
@@ -52,8 +52,8 @@ class PacoteViagemController extends Controller
     public function show(string $id)
     {
         $pacote = PacoteViagem::findOrFail($id);
-        $orcamentos = Orcamento::all();
-        return view("pacoteViagens.show", compact('pacote', 'orcamentos'));
+        $viagens = Viagem::all();
+        return view("pacoteViagens.show", compact('pacote', 'viagens'));
     }
 
     /**
@@ -62,8 +62,8 @@ class PacoteViagemController extends Controller
     public function edit(string $id)
     {
         $pacote = PacoteViagem::findOrFail($id);
-        $orcamentos = Orcamento::all();
-        return view("pacoteViagens.edit", compact('pacote', 'orcamentos'));
+        $viagens = Viagem::all();
+        return view("pacoteViagens.edit", compact('pacote', 'viagens'));
     }
 
     /**

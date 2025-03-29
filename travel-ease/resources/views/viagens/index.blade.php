@@ -37,8 +37,8 @@
                     <td>{{ $v->pagamento }}</td>
                     <td>{{ $v->orcamento->origem }} x {{ $v->orcamento->destino }}: {{ $v->orcamento->cliente->nome }} - CPF: {{ $v->orcamento->cliente->cpf }}</td>
                     <td>
-                        <a href="#" class="btn btn-warning">Editar</a>
-                        <a href="#" class="btn btn-info">Consultar</a>
+                        <a href="/viagens/{{ $v->id }}/edit" class="btn btn-warning">Editar</a>
+                        <a href="/viagens/{{ $v->id }}" class="btn btn-info">Consultar</a>
                     </td>
                 </tr>
             @endforeach

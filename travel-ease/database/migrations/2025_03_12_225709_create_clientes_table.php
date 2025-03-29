@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nome', 100);
-            $table->integer('cpf')->unique();
-            $table->integer('telefone');
+            $table->string('cpf')->unique();
+            $table->string('telefone');
             $table->text('endereco');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
