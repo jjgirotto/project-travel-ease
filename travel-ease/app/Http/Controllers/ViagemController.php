@@ -50,7 +50,9 @@ class ViagemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $viagem = Viagem::findOrFail($id);
+        $orcamentos = Orcamento::all();
+        return view("viagens.show", compact('viagem', 'orcamentos'));
     }
 
     /**
@@ -58,7 +60,9 @@ class ViagemController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $viagem = Viagem::findOrFail($id);
+        $orcamentos = Orcamento::all();
+        return view("viagens.edit", compact('viagem', 'orcamentos'));
     }
 
     /**
@@ -66,7 +70,18 @@ class ViagemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $viagem = Viagem::findOrFail($id);
+            $viagem->update($request->all());
+            return redirect()->route('viagens.index')->with('sucesso', 'Viagem alterada com sucesso!');
+        } catch (Exception $e) {
+            Log::error("Erro ao atualizar a viagem: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+	            'viagem_id' => $id,
+	            'request' => $request->all()
+            ]);
+            return redirect()->route('viagens.index')->with('erro','Erro ao editar!');
+        }
     }
 
     /**
@@ -74,6 +89,16 @@ class ViagemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $viagem = Viagem::findOrFail($id);
+            $viagem->delete();
+            return redirect()->route('viagens.index')->with('sucesso', 'Viagem excluída com sucesso!');
+        } catch (Exception $e) {
+            Log::error("Erro ao excluir a viagem: ".$e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+	            'viagem_id' => $id,
+            ]);
+            return redirect()->route('viagens.index')->with('erro','Erro ao excluir!');
+        }
     }
 }

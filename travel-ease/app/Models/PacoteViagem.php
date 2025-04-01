@@ -9,9 +9,9 @@ class PacoteViagem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['passeios', 'restaurantes', 'orcamento_id'];
+    protected $fillable = ['passeios', 'restaurantes', 'viagem_id'];
 
-    public function orcamento() {
-        return $this->belongsTo(Orcamento::class);
+    public function viagem() {
+        return $this->belongsTo(Viagem::class);
     }
 }
