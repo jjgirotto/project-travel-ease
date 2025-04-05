@@ -9,7 +9,7 @@
   <body class="container">
     <h1>Editar Passagem</h1>
 
-    <form action="/passagens/{{ $passagens->id }}" method="post">
+    <form action="/passagens/{{ $passagem->id }}" method="post">
     @csrf  
     @method('PUT')
     <div class="row mt-3">
