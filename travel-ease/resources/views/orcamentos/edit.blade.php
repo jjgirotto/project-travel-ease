@@ -36,6 +36,7 @@
 
     <div class="mb-3">
         <label for="acomodacao" class="form-label">Precisa de acomodação?</label>
+        <input type="hidden" name="acomodacao" value="0">
         <input type="checkbox" id="acomodacao" name="acomodacao" class="form-check-input" value="1" {{ $orcamento->acomodacao ? 'checked' : '' }}>
     </div>
         
@@ -61,6 +62,7 @@
 
     <div class="mb-3">
         <label for="escolhido" class="form-label">Orçamento escolhido:</label>
+        <input type="hidden" name="escolhido" value="0">
         <input type="checkbox" id="escolhido" name="escolhido" class="form-check-input" value="1" {{ $orcamento->escolhido ? 'checked' : '' }}>
     </div>
 
