@@ -27,7 +27,8 @@ Route::middleware("auth")->group(function(){
 
     //rotas das cruds - acessíveis ao usuário ADM
     Route::middleware([RoleAdmMiddleware::class])->group(function (){ 
-        Route::resource("clientes", ClienteController::class);
+        Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
+        Route::get('/clientes/{cliente}', [ClienteController::class, 'show'])->name('clientes.show');
         Route::resource("orcamentos", OrcamentoController::class);
         Route::resource("viagens", ViagemController::class);
         Route::resource("pacoteViagens", PacoteViagemController::class);
@@ -42,6 +43,15 @@ Route::middleware("auth")->group(function(){
         Route::get('/home-cli', function() {
             return view("home-cli");
         });
+        Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
+    
+        // Rota para criar cliente (permitido para o cliente logado)
+        Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
+        Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+    
+        // Rota para editar cliente (permitido para o cliente logado editar seus próprios dados)
+        Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
+        Route::put('/clientes/{cliente}', [ClienteController::class, 'update'])->name('clientes.update');
     });
    
 });

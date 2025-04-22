@@ -15,7 +15,12 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::with('user')->get();
+        if (auth()->user()->role === 'CLI') {
+            $cliente = auth()->user()->cliente;
+            $clientes = $cliente ? [$cliente] : [];
+        } else {
+            $clientes = Cliente::with('user')->get(); // para ADM
+        }
         return view("clientes.index", compact('clientes'));
     }
 
@@ -24,6 +29,10 @@ class ClienteController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role === 'CLI') {
+            return view('clientes.create');
+        }
+        
         $users = User::all();
         return view("clientes.create", compact("users"));
     }
@@ -34,7 +43,13 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         try {
-            Cliente::create($request->all());
+            $dados = $request->all();
+
+            if (auth()->user()->role === 'CLI') {
+                $dados['user_id'] = auth()->id(); // Garante que só crie pra si
+            }
+    
+            Cliente::create($dados);
             return redirect()->route('clientes.index')->with('sucesso', 'Cliente inserido com sucesso!');
         } catch (Exception $e) {
             Log::error("Erro ao criar o cliente: " . $e->getMessage(), [
@@ -50,6 +65,9 @@ class ClienteController extends Controller
      */
     public function show(string $id)
     {
+        if (auth()->user()->role !== 'ADM') {
+            abort(403, 'Acesso negado. Somente administradores podem consultar.');
+        }
         $cliente = Cliente::findOrFail($id);
         $users = User::all();
         return view("clientes.show", compact('cliente', 'users'));
@@ -61,8 +79,10 @@ class ClienteController extends Controller
     public function edit(string $id)
     {
         $cliente = Cliente::findOrFail($id);
-        $users = User::all();
-        return view("clientes.edit", compact('cliente', 'users'));
+        if (auth()->user()->role === 'CLI' && auth()->id() !== $cliente->user_id) {
+            abort(403, 'Acesso negado');
+        }
+        return view("clientes.edit", compact('cliente'));
     }
 
     /**
@@ -72,6 +92,9 @@ class ClienteController extends Controller
     {
         try {
             $cliente = Cliente::findOrFail($id);
+            if (auth()->user()->role === 'CLI' && auth()->id() !== $cliente->user_id) {
+                abort(403, 'Acesso negado');
+            }
             $cliente->update($request->all());
             return redirect()->route('clientes.index')->with('sucesso', 'Cliente alterado com sucesso!');
         } catch (Exception $e) {
@@ -89,6 +112,9 @@ class ClienteController extends Controller
      */
     public function destroy(string $id)
     {
+        if (auth()->user()->role !== 'ADM') {
+            abort(403, 'Acesso negado. Apenas administradores podem excluir clientes.');
+        }
         try {
             $cliente = Cliente::findOrFail($id);
             $cliente->delete();
