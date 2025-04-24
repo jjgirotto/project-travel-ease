@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrcamentoController extends Controller
 {
@@ -15,8 +16,16 @@ class OrcamentoController extends Controller
      */
     public function index()
     {
-        $orcamentos = Orcamento::with('cliente')->get();
-        return view("orcamentos.index", compact('orcamentos'));
+        if (Auth::user()->role === 'ADM') {
+            $orcamentos = Orcamento::with('cliente')->get();
+        } else {
+            $cliente = Cliente::where('user_id', Auth::id())->first();
+            $orcamentos = Orcamento::with('cliente')
+                ->where('cliente_id', $cliente->id)
+                ->get();
+        }
+    
+        return view('orcamentos.index', compact('orcamentos'));
     }
 
     /**
@@ -25,7 +34,11 @@ class OrcamentoController extends Controller
     public function create()
     {
         $clientes = Cliente::all();
-        return view("orcamentos.create", compact("clientes"));
+        $cliente = null;
+        if (Auth::user()->role === 'CLI') {
+            $cliente = Cliente::where('user_id', Auth::id())->first();
+        }
+        return view("orcamentos.create", compact("clientes", "cliente"));
     }
 
     /**
@@ -79,7 +92,7 @@ class OrcamentoController extends Controller
         try {
             $orcamento = Orcamento::findOrFail($id);
             $orcamento->update($request->all());
-            return redirect()->route('orcamentos.index')->with('sucesso', 'Orcamento alterado com sucesso!');
+            return redirect()->route('orcamentos.index')->with('sucesso', 'Orçamento alterado com sucesso!');
         } catch (Exception $e) {
             Log::error("erro ao atualizar o orcamento: ".$e->getMessage(), [
                 'stack' => $e->getTraceAsString(),

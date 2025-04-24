@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\RoleAdmMiddleware;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ClienteController extends Controller
@@ -15,8 +17,14 @@ class ClienteController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->role === 'CLI') {
+            $cliente = Cliente::where('user_id', Auth::id())->get();
+            return view('clientes.index', ['clientes' => $cliente]);
+        }
+    
+        // Para administradores
         $clientes = Cliente::with('user')->get();
-        return view("clientes.index", compact('clientes'));
+        return view('clientes.index', compact('clientes'));
     }
 
     /**
@@ -33,6 +41,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        
         try {
             Cliente::create($request->all());
             return redirect()->route('clientes.index')->with('sucesso', 'Cliente inserido com sucesso!');

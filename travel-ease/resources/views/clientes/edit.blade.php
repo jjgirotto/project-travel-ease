@@ -29,15 +29,15 @@
         </div>
 
         <div class="mb-3">
-            <label for="user_id" class="form-label">Usuário: </label>
-            <select id="user_id" name="user_id" class="form-select" required="">
-                @foreach ($users as $u)
-                    <option value="{{ $u->id }}" {{ $cliente->user_id == $u->id ? "selected" : ""}} >
-                        {{ $u->email }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+             <label for="user_id" class="form-label">Usuário: </label>
+             <select id="user_id" name="user_id" class="form-select" required="">
+                 @foreach ($users as $u)
+                     <option value="{{ $u->id }}">
+                         {{ $u->email }}
+                     </option>
+                 @endforeach
+             </select>
+         </div>
 
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>

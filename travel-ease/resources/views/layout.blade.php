@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sistema de Ecommerce</title>
+  <title>Sistema de Gerenciamento de Viagens</title>
   <!-- Bootstrap 5 CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -33,8 +33,13 @@
                 <li class="nav-item"><a class="nav-link" href="/pacoteViagens">Pacotes</a></li>
                 <li class="nav-item"><a class="nav-link" href="/passagens">Passagens</a></li>
             @elseif(Auth::user()->role === 'CLI')
-                <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
+              <li class="nav-item"><a class="nav-link" href="/clientes">Perfil</a></li>
+              <li class="nav-item"><a class="nav-link" href="/orcamentos">Orçamentos</a></li>
+              <li class="nav-item"><a class="nav-link" href="/viagens">Viagens</a></li>
+              <li class="nav-item"><a class="nav-link" href="/pacoteViagens">Pacotes</a></li>
+              <li class="nav-item"><a class="nav-link" href="/passagens">Passagens</a></li>   
+              <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
             @endif
             @endauth
 
