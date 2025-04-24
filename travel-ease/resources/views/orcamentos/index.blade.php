@@ -16,7 +16,7 @@
     @endif
 
     <table class="table table-hover table-striped">
-        <thead>
+        <thead>        
             <tr>
                 <th>ID</th>
                 <th>Origem</th>
@@ -39,7 +39,9 @@
                     <td>{{ $o->valorTotal }}</td>
                     <td>{{ $o->cliente->nome }}</td>
                     <td>
+                        @if(Auth::user()->role === 'ADM')
                         <a href="/orcamentos/{{ $o->id }}/edit" class="btn btn-warning">Editar</a>
+                        @endif
                         <a href="/orcamentos/{{ $o->id }}" class="btn btn-info">Consultar</a>
                     </td>
                 </tr>

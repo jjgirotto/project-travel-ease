@@ -2,7 +2,7 @@
 
 @section('principal')
 
-    <h1>Editar Orçamento</h1>
+    <h1>Consultar Orçamento</h1>
     
     <form method="post" action="/orcamentos/{{ $orcamento->id }}">
         @csrf
@@ -37,7 +37,7 @@
             <label for="preferencia" class="form-label">Preferência:</label>
             <input type="text" id="preferencia" name="preferencia" value = "{{ $orcamento->preferencia }}" class="form-control" disabled>
         </div>
-
+        @if(Auth::user()->role === 'ADM')
         <div class="mb-3">
             <label for="qtdeMilhas" class="form-label">Quantidade de milhas:</label>
             <input type="number" id="qtdeMilhas" name="qtdeMilhas" value = "{{ $orcamento->qtdeMilhas }}" class="form-control" disabled>
@@ -47,7 +47,7 @@
             <label for="valorMilhas" class="form-label">Valor de milhas:</label>
             <input type="number" id="valorMilhas" name="valorMilhas" step="0.01" value = "{{ $orcamento->valorMilhas }}" class="form-control" disabled>
         </div>
-
+        @endif
         <div class="mb-3">
             <label for="valorTotal" class="form-label">Valor total:</label>
             <input type="number" id="valorTotal" name="valorTotal" step="0.01" value = "{{ $orcamento->valorTotal }}" class="form-control" disabled>
@@ -68,9 +68,10 @@
                 @endforeach
             </select>
         </div>
-
+        @if(Auth::user()->role === 'ADM')
         <button type="submit" class="btn btn-danger">Excluir</button>
         <a href="/orcamentos" class="btn btn-primary">Cancelar</a>
+        @endif
     </form>
             
-endsection
+@endsection

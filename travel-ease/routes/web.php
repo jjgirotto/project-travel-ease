@@ -21,15 +21,36 @@ Route::post('/login', [AuthController::class, 'login']);
 //middleware - protege as rotas
 Route::middleware("auth")->group(function(){
 
-    //rota de logout - acessível a ambos os tipos de usuário
+    //rotas create
+    Route::get('/clientes/create', [ClienteController::class, 'create'])->middleware('role.adm')->name('clientes.create');
+    Route::get('/orcamentos/create', [OrcamentoController::class, 'create'])->name('orcamentos.create');
+
+    //rotas acessíveis a ambos os tipos de usuário
     Route::post('/logout', [AuthController::class, 'logout']);
+    
+    Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
+    Route::get('/clientes/{c}', [ClienteController::class, 'show'])->name('clientes.show');
+    
+    Route::get('/orcamentos', [OrcamentoController::class, 'index'])->name('orcamentos.index');
+    Route::get('/orcamentos/{o}', [OrcamentoController::class, 'show'])->name('orcamentos.show');
+    Route::post('/orcamentos', [OrcamentoController::class, 'store'])->name('orcamentos.store');
 
-
+    
     //rotas das cruds - acessíveis ao usuário ADM
-    Route::middleware([RoleAdmMiddleware::class])->group(function (){ 
-        Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
-        Route::get('/clientes/{cliente}', [ClienteController::class, 'show'])->name('clientes.show');
-        Route::resource("orcamentos", OrcamentoController::class);
+    Route::middleware([RoleAdmMiddleware::class])->group(function () {
+        Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+        Route::get('/clientes/{c}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
+        Route::put('/clientes/{c}', [ClienteController::class, 'update'])->name('clientes.update');
+        Route::delete('/clientes/{c}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
+    });
+
+    Route::middleware([RoleAdmMiddleware::class])->group(function () {
+        Route::get('/orcamentos/{o}/edit', [OrcamentoController::class, 'edit'])->name('orcamentos.edit');
+        Route::put('/orcamentos/{o}', [OrcamentoController::class, 'update'])->name('orcamentos.update');
+        Route::delete('/orcamentos/{o}', [OrcamentoController::class, 'destroy'])->name('orcamentos.destroy');
+    });
+
+    Route::middleware([RoleAdmMiddleware::class])->group(function (){        
         Route::resource("viagens", ViagemController::class);
         Route::resource("pacoteViagens", PacoteViagemController::class);
         Route::resource("passagens", PassagemController::class);
@@ -38,20 +59,11 @@ Route::middleware("auth")->group(function(){
         });
     });
 
-    //rota acessível ao usuário CLI - somente a página home
+    //rota acessível somente ao usuário CLI - somente a página home
     Route::middleware([RoleCliMiddleware::class])->group(function (){ 
         Route::get('/home-cli', function() {
             return view("home-cli");
         });
-        Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
-    
-        // Rota para criar cliente (permitido para o cliente logado)
-        Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
-        Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
-    
-        // Rota para editar cliente (permitido para o cliente logado editar seus próprios dados)
-        Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
-        Route::put('/clientes/{cliente}', [ClienteController::class, 'update'])->name('clientes.update');
     });
    
 });

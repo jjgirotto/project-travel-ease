@@ -33,8 +33,13 @@
                 <li class="nav-item"><a class="nav-link" href="/pacoteViagens">Pacotes</a></li>
                 <li class="nav-item"><a class="nav-link" href="/passagens">Passagens</a></li>
             @elseif(Auth::user()->role === 'CLI')
-                <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
+              <li class="nav-item"><a class="nav-link" href="/clientes">Perfil</a></li>
+              <li class="nav-item"><a class="nav-link" href="/orcamentos">Orçamentos</a></li>
+              <li class="nav-item"><a class="nav-link" href="/viagens">Viagens</a></li>
+              <li class="nav-item"><a class="nav-link" href="/pacoteViagens">Pacotes</a></li>
+              <li class="nav-item"><a class="nav-link" href="/passagens">Passagens</a></li>   
+              <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
             @endif
             @endauth
 

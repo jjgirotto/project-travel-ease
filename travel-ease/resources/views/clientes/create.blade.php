@@ -30,9 +30,11 @@
          <div class="mb-3">
              <label for="user_id" class="form-label">Usuário: </label>
              <select id="user_id" name="user_id" class="form-select" required="">
-                <option value="{{ Auth::user()->id }}" selected>
-                    {{ Auth::user()->email }}
-                </option>
+                 @foreach ($users as $u)
+                     <option value="{{ $u->id }}">
+                         {{ $u->email }}
+                     </option>
+                 @endforeach
              </select>
          </div>
  

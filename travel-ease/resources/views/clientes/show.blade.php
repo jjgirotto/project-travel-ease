@@ -38,9 +38,10 @@
                 @endforeach
             </select>
         </div>
-
+        @if(Auth::user()->role === 'ADM')
         <button type="submit" class="btn btn-danger">Excluir</button>
         <a href="/clientes" class="btn btn-primary">Cancelar</a>
+        @endif
     </form>
             
 @endsection

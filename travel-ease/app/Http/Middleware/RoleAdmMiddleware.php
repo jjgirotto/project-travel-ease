@@ -17,7 +17,7 @@ class RoleAdmMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check() || Auth::user()->role !== "ADM"){
-            return redirect("/login")->withErrors(['acesso' => "Acesso negado ao nível de usuário!"]);
+            return redirect("login")->withErrors(['acesso' => "Acesso negado ao nível de usuário!"]);
         }
         return $next($request);
     }
