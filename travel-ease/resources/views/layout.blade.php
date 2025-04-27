@@ -38,8 +38,8 @@
               <li class="nav-item"><a class="nav-link" href="/viagens">Viagens</a></li>
               <li class="nav-item"><a class="nav-link" href="/pacoteViagens">Pacotes</a></li>
               <li class="nav-item"><a class="nav-link" href="/passagens">Passagens</a></li>   
-              <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
+              <li class="nav-item"><a class="nav-link" href="/sobre">Sobre</a></li>
+              <li class="nav-item"><a class="nav-link" href="/contato">Contato</a></li>
             @endif
             @endauth
 
