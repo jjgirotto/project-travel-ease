@@ -3,7 +3,7 @@
 @section('principal')
     <h1>Nova Passagem</h1>
 
-    <form action="/passagens" method="post">
+    <form method="post" action="/passagens" >
     @csrf  
     
     <div class="row mt-3">

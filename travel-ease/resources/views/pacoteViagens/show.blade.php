@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('principal')
-    <h1>Editar Pacote de Viagem</h1>
+    <h1>Consultar Pacote de Viagem</h1>
 
     <form method="post" action="/pacoteViagens/{{ $pacote-> id }}">
       @csrf
@@ -28,8 +28,10 @@
             </select>
       </div>
 
+      @if(Auth::user()->role === 'ADM')
       <button type="submit" class="btn btn-danger">Excluir</button>
       <a href="/pacoteViagens" class="btn btn-primary">Cancelar</a>
+      @endif
   </form>
 
 @endsection

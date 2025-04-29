@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Cliente;
 use App\Models\Orcamento;
 use App\Models\Viagem;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ViagemController extends Controller
 {
@@ -15,8 +18,16 @@ class ViagemController extends Controller
      */
     public function index()
     {
-        $viagens = Viagem::with('orcamento')->get();
-        return view("viagens.index", compact('viagens'));
+        if (Auth::user()->role === 'ADM') {
+            $viagens = Viagem::with('orcamento.cliente')->get();
+        } else {
+            $cliente = Cliente::where('user_id', Auth::id())->first();
+            $orcamentoIds = Orcamento::where('cliente_id', $cliente->id)->pluck('id');   
+            $viagens = Viagem::with('orcamento.cliente')
+                ->whereIn('orcamento_id', $orcamentoIds)
+                ->get();
+        }
+        return view('viagens.index', compact('viagens'));
     }
 
     /**
@@ -50,8 +61,8 @@ class ViagemController extends Controller
      */
     public function show(string $id)
     {
-        $viagem = Viagem::findOrFail($id);
-        $orcamentos = Orcamento::all();
+        $viagem = Viagem::with('orcamento.cliente')->findOrFail($id);
+        $orcamentos = Orcamento::with('cliente')->get(); 
         return view("viagens.show", compact('viagem', 'orcamentos'));
     }
 

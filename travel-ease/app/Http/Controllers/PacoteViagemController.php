@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
+use App\Models\Orcamento;
 use Illuminate\Http\Request;
 use App\Models\PacoteViagem;
 use App\Models\Viagem;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
@@ -16,8 +19,15 @@ class PacoteViagemController extends Controller
      */
     public function index()
     {
-        $pacoteViagem = PacoteViagem::with('viagem')->get();
-        return view("pacoteViagens.index", compact('pacoteViagem'));
+        if (Auth::user()->role === 'ADM') {
+            $pacoteViagens = PacoteViagem::with('viagem')->get();
+        } else {
+            $cliente = Cliente::where('user_id', Auth::id())->first();
+            $orcamentos = Orcamento::where('cliente_id', $cliente->id)->pluck('id');
+            $viagens = Viagem::whereIn('orcamento_id', $orcamentos)->pluck('id');
+            $pacoteViagens = PacoteViagem::with('viagem')->whereIn('viagem_id', $viagens)->get();
+        }
+        return view('pacoteViagens.index', compact('pacoteViagens'));
     }
 
     /**
@@ -51,8 +61,8 @@ class PacoteViagemController extends Controller
      */
     public function show(string $id)
     {
-        $pacote = PacoteViagem::findOrFail($id);
-        $viagens = Viagem::all();
+        $pacote = PacoteViagem::with('viagem.orcamento')->findOrFail($id);
+        $viagens = Viagem::with('orcamento')->get(); 
         return view("pacoteViagens.show", compact('pacote', 'viagens'));
     }
 

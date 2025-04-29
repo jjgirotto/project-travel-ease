@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
+use App\Models\Orcamento;
 use Illuminate\Http\Request;
 use App\Models\Viagem;
 use App\Models\Passagem;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class PassagemController extends Controller
@@ -15,8 +18,15 @@ class PassagemController extends Controller
      */
     public function index()
     {
-        $passagem = Passagem::with('viagem')->get();
-        return view('passagens.index', compact('passagem'));
+        if (Auth::user()->role === 'ADM') {
+            $passagens = Passagem::with('viagem')->get();
+        } else {
+            $cliente = Cliente::where('user_id', Auth::id())->first();
+            $orcamentos = Orcamento::where('cliente_id', $cliente->id)->pluck('id');
+            $viagens = Viagem::whereIn('orcamento_id', $orcamentos)->pluck('id');
+            $passagens = Passagem::with('viagem')->whereIn('viagem_id', $viagens)->get();
+        }
+        return view('passagens.index', compact('passagens'));
     }
 
     /**
@@ -50,8 +60,8 @@ class PassagemController extends Controller
      */
     public function show(string $id)
     {
-        $passagem = Passagem::findOrFail($id);
-        $viagens = Viagem::all();
+        $passagem = Passagem::with('viagem.orcamento')->findOrFail($id);
+        $viagens = Viagem::with('orcamento')->get(); 
         return view("passagens.show", compact('passagem', 'viagens'));
     }
 
