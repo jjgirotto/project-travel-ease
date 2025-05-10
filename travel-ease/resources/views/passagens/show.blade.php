@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('principal')
-    <h1>Consultar Passagem</h1>
+    <h2><i class="bi bi-search"></i> Consultar Passagens</h2>
 
     <form action="/passagens/{{ $passagem->id }}" method="post">
     @csrf  
@@ -40,9 +40,10 @@
     </div>
 
     @if(Auth::user()->role === 'ADM')
-    <p>Deseja excluir o registro?</p>
-    <button type="submit" class="btn btn-danger">Excluir</button>
-    <a href="/passagens" class="btn btn-primary">Cancelar</a>
+    <button type="submit" class="btn btn-danger mb-3" onclick="return confirm('Tem certeza que deseja excluir esta passagem?')">
+            <i class="bi bi-trash"></i> Excluir
+    </button>
+    <a href="/passagens" class="btn btn-primary mb-3">Cancelar</a>
     @endif
 
     </form>

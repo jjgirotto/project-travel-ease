@@ -2,7 +2,7 @@
 
 @section('principal')
 
-    <h1>Consultar Orçamento</h1>
+    <h2><i class="bi bi-search"></i> Consultar Orçamento</h2>
     
     <form method="post" action="/orcamentos/{{ $orcamento->id }}">
         @csrf
@@ -50,7 +50,7 @@
         @endif
         <div class="mb-3">
             <label for="valorTotal" class="form-label">Valor total:</label>
-            <input type="number" id="valorTotal" name="valorTotal" step="0.01" value = "{{ $orcamento->valorTotal }}" class="form-control" disabled>
+            <input type="number" id="valorTotal" name="valorTotal" step="0.01" value="{{ $orcamento->valorTotal }}" class="form-control" disabled>
         </div>
 
     <div class="mb-3">
@@ -69,8 +69,10 @@
             </select>
         </div>
         @if(Auth::user()->role === 'ADM')
-        <button type="submit" class="btn btn-danger">Excluir</button>
-        <a href="/orcamentos" class="btn btn-primary">Cancelar</a>
+        <button type="submit" class="btn btn-danger mb-3" onclick="return confirm('Tem certeza que deseja excluir este orçamento?')">
+            <i class="bi bi-trash"></i> Excluir
+        </button>
+        <a href="/orcamentos" class="btn btn-primary mb-3">Cancelar</a>
         @endif
     </form>
             

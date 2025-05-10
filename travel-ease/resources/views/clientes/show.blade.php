@@ -2,7 +2,7 @@
 
 @section('principal')
  
-    <h1>Consultar Cliente</h1>
+    <h2><i class="bi bi-search"></i> Consultar Cliente</h2>
     
     <form method="post" action="/clientes/{{ $cliente-> id }}">
         @csrf
@@ -38,8 +38,10 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-danger">Excluir</button>
-        <a href="/clientes" class="btn btn-primary">Cancelar</a>
+        <button type="submit" class="btn btn-danger mb-3" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">
+            <i class="bi bi-trash"></i> Excluir
+        </button>
+        <a href="/clientes" class="btn btn-primary mb-3">Cancelar</a>
     </form>
             
 @endsection

@@ -2,7 +2,7 @@
 
 @section('principal')
  
-     <h1>Nova Viagem</h1>
+     <h2><i class="bi bi-plus-circle"></i> Nova Viagem</h2>
      
      <form method="post" action="/viagens">
          @csrf
@@ -27,7 +27,9 @@
              </select>
          </div>
  
-         <button type="submit" class="btn btn-primary">Enviar</button>
+         <button type="submit" class="btn btn-primary mb-3">
+            <i class="bi bi-send-check"></i> Enviar
+        </button>
      </form>
              
 @endsection

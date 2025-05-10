@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('principal')
-    <h1>Editar Passagem</h1>
+    <h2><i class="bi bi-pencil-square"></i> Editar Passagem</h2>
 
     <form action="/passagens/{{ $passagem->id }}" method="post">
     @csrf  
@@ -29,6 +29,7 @@
     </div>
 
     <div class="row mt-3 mb-3">
+        <div class="col-7">
         <label for="viagem_id" class="form-label">Viagem: </label>
         <select name="viagem_id" id="viagem_id" class="form-select" required="">
             @foreach($viagens as $v)
@@ -37,9 +38,12 @@
                 </option>
             @endforeach
         </select>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <button type="submit" class="btn btn-primary mb-3">
+        <i class="bi bi-send-check"></i> Enviar
+    </button>
 
     </form>
 @endsection
