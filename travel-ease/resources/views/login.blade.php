@@ -31,8 +31,13 @@
           <label for="password" class="form-label">Senha</label>
           <input name="password" type="password" class="form-control" id="password" placeholder="Digite sua senha" required>
         </div>
+        <div class="d-grid mb-3">
         <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </div>
       </form>
+      <div class="mb-3 d-grid">
+         <a href="/cadastro" class="btn btn-secondary">Faça o seu cadastro!</a>
+       </div>
     </div>
   </div>
 

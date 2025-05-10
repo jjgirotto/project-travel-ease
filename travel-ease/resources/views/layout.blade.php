@@ -27,18 +27,16 @@
 
             @auth
             @if(Auth::user()->role === 'ADM')
-                <li class="nav-item"><a class="nav-link" href="/clientes">Clientes</a></li>
-                <li class="nav-item"><a class="nav-link" href="/orcamentos">Orçamentos</a></li>
-                <li class="nav-item"><a class="nav-link" href="/viagens">Viagens</a></li>
-                <li class="nav-item"><a class="nav-link" href="/pacoteViagens">Pacotes</a></li>
-                <li class="nav-item"><a class="nav-link" href="/passagens">Passagens</a></li>
+                <li class="nav-item"><a class="nav-link" href="/clientes">Clientes</a></li>   
             @elseif(Auth::user()->role === 'CLI')
-              <li class="nav-item"><a class="nav-link" href="/clientes">Perfil</a></li>
-              <li class="nav-item"><a class="nav-link" href="/orcamentos">Orçamentos</a></li>
-              <li class="nav-item"><a class="nav-link" href="/viagens">Viagens</a></li>
-              <li class="nav-item"><a class="nav-link" href="/pacoteViagens">Pacotes</a></li>
-              <li class="nav-item"><a class="nav-link" href="/passagens">Passagens</a></li>   
-              <li class="nav-item"><a class="nav-link" href="/sobre">Sobre</a></li>
+            <a class="nav-link" href="/editar">Minha Conta</a>  
+            @endif
+            <li class="nav-item"><a class="nav-link" href="/orcamentos">Orçamentos</a></li>
+            <li class="nav-item"><a class="nav-link" href="/viagens">Viagens</a></li>
+            <li class="nav-item"><a class="nav-link" href="/pacoteViagens">Pacotes</a></li>
+            <li class="nav-item"><a class="nav-link" href="/passagens">Passagens</a></li>
+            @if(Auth::user()->role === 'CLI') 
+            <li class="nav-item"><a class="nav-link" href="/sobre">Sobre</a></li>
               <li class="nav-item"><a class="nav-link" href="/contato">Contato</a></li>
             @endif
             @endauth

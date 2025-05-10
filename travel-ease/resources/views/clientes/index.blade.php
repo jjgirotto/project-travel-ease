@@ -1,15 +1,8 @@
 @extends('layout')
 
-@section('principal')
-
-    @if(auth()->user()->role === 'CLI')
-        <h2>Perfil: {{ $clientes[0]->nome }}</h2>
-    @endif   
-
-    @if(auth()->user()->role === 'ADM')
+@section('principal') 
         <h1>Clientes</h1>
         <a class="btn btn-primary" href="{{ route('clientes.create') }}">Novo Cliente</a>
-    @endif
 
     @if (session('erro'))
         <div class="alert alert-danger">
@@ -43,9 +36,7 @@
                     <td>{{ $c->telefone }}</td>
                     <td>
                         <a href="/clientes/{{ $c->id }}" class="btn btn-info">Consultar</a>
-                        @if(Auth::user()->role === 'ADM')
                             <a href="/clientes/{{ $c->id }}/edit" class="btn btn-warning">Editar</a>
-                        @endif
                     </td>
                 </tr>
             @endforeach
