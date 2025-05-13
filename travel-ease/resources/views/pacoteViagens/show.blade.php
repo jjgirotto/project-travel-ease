@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('principal')
-    <h1>Consultar Pacote de Viagem</h1>
+    <h2><i class="bi bi-search"></i> Consultar Pacote de Viagem</h2>
 
     <form method="post" action="/pacoteViagens/{{ $pacote-> id }}">
       @csrf
@@ -28,10 +28,12 @@
             </select>
       </div>
 
-      @if(Auth::user()->role === 'ADM')
-      <button type="submit" class="btn btn-danger">Excluir</button>
-      <a href="/pacoteViagens" class="btn btn-primary">Cancelar</a>
-      @endif
+    @if(Auth::user()->role === 'ADM')
+    <button type="submit" class="btn btn-danger mb-3" onclick="return confirm('Tem certeza que deseja excluir este pacote de viagem?')">
+        <i class="bi bi-trash"></i> Excluir
+    </button>
+    <a href="/pacoteViagens" class="btn btn-primary mb-3">Cancelar</a>
+    @endif
   </form>
 
 @endsection

@@ -1,14 +1,14 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\OrcamentoController;
 use App\Http\Controllers\PacoteViagemController;
 use App\Http\Controllers\ViagemController;
 use App\Http\Controllers\PassagemController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\SobreController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\RoleAdmMiddleware;
 use App\Http\Middleware\RoleCliMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('login');
 });
 
+
+Route::get("/cadastro", [UserController::class, 'create']);
+Route::post("/cadastro", [UserController::class, 'store']);
 //rotas de login
 Route::get('/login', [AuthController::class, 'showFormLogin'])->name('login'); 
 Route::post('/login', [AuthController::class, 'login']);
@@ -33,9 +36,10 @@ Route::middleware("auth")->group(function(){
 
     //rotas acessíveis a ambos os tipos de usuário
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get("/editar", [UserController::class, 'edit']);
+    Route::post("/editar", [UserController::class, 'update']);
     
-    Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
-    Route::get('/clientes/{c}', [ClienteController::class, 'show'])->name('clientes.show');
+    
     
     Route::get('/orcamentos', [OrcamentoController::class, 'index'])->name('orcamentos.index');
     Route::get('/orcamentos/{o}', [OrcamentoController::class, 'show'])->name('orcamentos.show');
@@ -52,6 +56,8 @@ Route::middleware("auth")->group(function(){
     
     //rotas das cruds - acessíveis ao usuário ADM
     Route::middleware([RoleAdmMiddleware::class])->group(function () {
+        Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
+        Route::get('/clientes/{c}', [ClienteController::class, 'show'])->name('clientes.show');
         Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
         Route::get('/clientes/{c}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
         Route::put('/clientes/{c}', [ClienteController::class, 'update'])->name('clientes.update');
@@ -86,9 +92,7 @@ Route::middleware("auth")->group(function(){
     });
 
     Route::middleware([RoleAdmMiddleware::class])->group(function (){        
-        Route::get('/home-adm', function() {
-            return view("home-adm");
-        });
+        Route::get('/home-adm', [AdminController::class, 'home'])->name('admin.home');
     });
 
     //rota acessível somente ao usuário CLI - somente a página home

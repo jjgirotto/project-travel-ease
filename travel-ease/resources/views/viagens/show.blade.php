@@ -2,7 +2,7 @@
 
 @section('principal')
  
-     <h1>Consultar Viagem</h1>
+    <h2><i class="bi bi-search"></i> Consultar Viagens</h2>
      
      <form method="post" action="/viagens/{{ $viagem->id }}">
         @csrf
@@ -27,9 +27,10 @@
              </select>
          </div>
          @if(Auth::user()->role === 'ADM')
-         <p>Deseja excluir o registro?</p>
-         <button type="submit" class="btn btn-danger">Excluir</button>
-         <a href="/viagens" class="btn btn-primary">Cancelar</a>
+        <button type="submit" class="btn btn-danger mb-3" onclick="return confirm('Tem certeza que deseja excluir esta viagem?')">
+            <i class="bi bi-trash"></i> Excluir
+        </button>
+         <a href="/viagens" class="btn btn-primary mb-3">Cancelar</a>
          @endif
      </form>
              

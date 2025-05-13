@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('principal')
-    <h1>Nova Passagem</h1>
+    <h2><i class="bi bi-plus-circle"></i> Nova Passagem</h2>
 
     <form method="post" action="/passagens" >
     @csrf  
@@ -29,6 +29,7 @@
     </div>
 
     <div class="row mt-3 mb-3">
+    <div class="col-7">
         <label for="viagem_id" class="form-label">Viagem: </label>
         <select name="viagem_id" id="viagem_id" class="form-select" required="">
             @foreach($viagens as $v)
@@ -38,8 +39,11 @@
             @endforeach
         </select>
     </div>
-
-    <button type="submit" class="btn btn-primary">Emitir Passagem</button>
+    </div>
+    
+    <button type="submit" class="btn btn-primary mb-3">
+        <i class="bi bi-send-check"></i> Emitir Passagem
+    </button>
 
     </form>
 @endsection

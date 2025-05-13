@@ -2,7 +2,7 @@
 
 @section('principal')
  
-     <h1>Editar Viagem</h1>
+     <h2><i class="bi bi-pencil-square"></i> Editar Viagem</h2>
      
      <form method="post" action="/viagens/{{ $viagem->id }}">
         @csrf
@@ -27,7 +27,9 @@
              </select>
          </div>
  
-         <button type="submit" class="btn btn-primary">Enviar</button>
+         <button type="submit" class="btn btn-primary mb-3">
+            <i class="bi bi-send-check"></i> Enviar
+        </button>
      </form>
              
 @endsection

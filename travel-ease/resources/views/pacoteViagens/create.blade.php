@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('principal')
-    <h1>Novo Pacote de Viagem</h1>
+    <h2><i class="bi bi-plus-circle"></i> Novo Pacote de Viagem</h2>
 
     <form action="/pacoteViagens" method="post">
         @csrf
@@ -26,7 +26,9 @@
              </select>
         </div>
  
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary mb-3">
+            <i class="bi bi-send-check"></i> Enviar
+        </button>
     </form>
 
 @endsection

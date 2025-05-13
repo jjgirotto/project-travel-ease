@@ -17,12 +17,6 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role === 'CLI') {
-            $cliente = Cliente::where('user_id', Auth::id())->get();
-            return view('clientes.index', ['clientes' => $cliente]);
-        }
-    
-        // Para administradores
         $clientes = Cliente::with('user')->get();
         return view('clientes.index', compact('clientes'));
     }
