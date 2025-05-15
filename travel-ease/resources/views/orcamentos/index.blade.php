@@ -44,11 +44,17 @@
                         <td>{{ $o->destino }}</td>
                         <td>{{ $o->estadia }}</td>
                         <td>{{ $o->viajantes }}</td>
-                        <td>R$ {{ number_format($o->valorTotal, 2, ',', '.') }}</td>
+                        <td>
+                            @if($o->valorTotal == 0)
+                                A definir
+                            @else
+                                R$ {{ number_format($o->valorTotal, 2, ',', '.') }}
+                            @endif
+                        </td>
                         <td>{{ $o->cliente->nome }}</td>
                         <td>
                             <div class="d-flex justify-content-center gap-2">
-                                <a href="/orcamentos/{{ $o->id }}" class="btn btn-sm btn-primary">
+                                <a href="/orcamentos/{{ $o->id }}" class="btn btn-sm btn-info">
                                     <i class="bi bi-eye me-1"></i> Consultar
                                 </a>
                                 @if(Auth::user()->role === 'ADM')

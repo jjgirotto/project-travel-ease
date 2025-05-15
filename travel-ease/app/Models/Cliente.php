@@ -14,4 +14,9 @@ class Cliente extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function orcamentos()
+    {
+        return $this->hasMany(Orcamento::class);
+    }
 }
