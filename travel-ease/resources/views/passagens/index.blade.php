@@ -57,6 +57,11 @@
                                 <a href="/passagens/{{ $p->id }}" class="btn btn-sm btn-info">
                                     <i class="bi bi-eye me-1"></i> Consultar
                                 </a>
+                                @if(auth()->user()->role === 'CLI')
+                                <a href="{{ route('emitir.itinerario', $p->id) }}" class="btn btn-sm btn-info">
+                                    <i class="bi bi-file-earmark-text me-1"></i> Emitir Itinerário
+                                </a>
+                                @endif
                             </div>
                         </td>
                     </tr>

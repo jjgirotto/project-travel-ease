@@ -14,4 +14,8 @@ class Orcamento extends Model
     public function cliente() {
         return $this->belongsTo(Cliente::class);
     }
+    public function viagens()
+    {
+        return $this->hasMany(Viagem::class);
+    }
 }

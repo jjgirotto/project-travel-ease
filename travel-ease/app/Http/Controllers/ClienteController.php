@@ -104,4 +104,24 @@ class ClienteController extends Controller
             return redirect()->route('produtos.index')->with('erro','Erro ao excluir!');
         }
     }
+
+    public function home()
+    {
+        $cliente = Cliente::where('user_id', Auth::id())->first();
+
+        // Orçamentos em aberto
+        $orcamentosAbertos = $cliente->orcamentos()->where('escolhido', '!=', 1)->get();
+
+        // Viagens com passagem emitida
+        $viagensProximas = $cliente->orcamentos()
+            ->with('viagens.passagem') // carrega as passagens das viagens
+            ->get()
+            ->flatMap(function ($orcamento) {
+                return $orcamento->viagens->filter(function ($viagem) {
+                    return $viagem->passagem !== null;
+                });
+            });
+
+        return view('home-cli', compact('orcamentosAbertos', 'viagensProximas'));
+    }
 }

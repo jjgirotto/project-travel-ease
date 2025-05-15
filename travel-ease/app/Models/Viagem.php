@@ -14,5 +14,11 @@ class Viagem extends Model
     public function orcamento() {
         return $this->belongsTo(Orcamento::class);
     }
-
+    public function passagem() {
+    return $this->hasOne(Passagem::class);
+    }
+    public function pacote()
+    {
+        return $this->hasOne(PacoteViagem::class);
+    }
 }

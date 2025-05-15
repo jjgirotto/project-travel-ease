@@ -18,14 +18,16 @@ class AdminController extends Controller
         'destinosAtivos' => Orcamento::distinct('destino')->count('destino'),
         'clientesMes' => Cliente::whereMonth('created_at', now()->month)->count(),
         'viagensProximas' => Passagem::whereDate('checkin', '>=', now())
-            ->with(['viagem', 'cliente'])
-            ->orderBy('checkin')
-            ->take(5)
-            ->get(),
+        ->with(['viagem.orcamento.cliente'])  
+        ->orderBy('checkin')
+        ->take(5)
+        ->get(),
         'orcamentos' => Orcamento::latest()->take(5)->get(),
         'clientesRecentes' => Cliente::latest()->take(5)->get(),
-            'destinosFrequentes' => Orcamento::select('destino', DB::raw('count(*) as total'))
-        ->groupBy('destino')
+        'destinosFrequentes' => Orcamento::select(DB::raw('LOWER(TRIM(destino)) as destino_normalizado'), DB::raw('count(*) as total'))
+        ->whereNotNull('destino')
+        ->where('destino', '<>', '')
+        ->groupBy('destino_normalizado')
         ->orderByDesc('total')
         ->get()
     ]);

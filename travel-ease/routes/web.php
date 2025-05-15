@@ -7,6 +7,7 @@ use App\Http\Controllers\PacoteViagemController;
 use App\Http\Controllers\ViagemController;
 use App\Http\Controllers\PassagemController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ItinerarioController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\RoleAdmMiddleware;
@@ -97,11 +98,10 @@ Route::middleware("auth")->group(function(){
 
     //rota acessível somente ao usuário CLI - somente a página home
     Route::middleware([RoleCliMiddleware::class])->group(function (){ 
-        Route::get('/home-cli', function() {
-            return view("home-cli");
-        });
+        Route::get('/home-cli', [ClienteController::class, 'home'])->name('cliente.home');
         Route::get('/sobre', [PageController::class, 'sobre'])->name('sobre');
         Route::get('/contato', [PageController::class, 'contato'])->name('contato');
+        Route::get('/viagens/{viagem}/itinerario', [ItinerarioController::class, 'emitir'])->name('emitir.itinerario');
     });
    
 });
