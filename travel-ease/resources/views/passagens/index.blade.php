@@ -53,6 +53,9 @@
                                 <a href="/passagens/{{ $p->id }}/edit" class="btn btn-sm btn-warning">
                                     <i class="bi bi-pencil me-1"></i> Editar
                                 </a>
+                                <a href="{{ route('passagens.avisos.form', $p->id) }}" class="btn btn-sm btn-secondary">
+                                    <i class="bi bi-envelope-paper"></i> Avisos
+                                </a>
                                 @endif
                                 <a href="/passagens/{{ $p->id }}" class="btn btn-sm btn-info">
                                     <i class="bi bi-eye me-1"></i> Consultar

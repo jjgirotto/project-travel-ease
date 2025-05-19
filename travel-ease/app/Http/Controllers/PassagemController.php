@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AvisoViagemSemana;
 use App\Models\Cliente;
 use App\Models\Orcamento;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use App\Models\Passagem;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PassagemController extends Controller
 {
@@ -111,4 +113,47 @@ class PassagemController extends Controller
             return redirect()->route('passagens.index')->with('erro','Erro ao excluir!');
         }
     }
+
+    public function formAviso($id)
+    {
+        $passagem = Passagem::with('viagem.orcamento.cliente')->findOrFail($id);
+        return view('passagens.aviso', compact('passagem'));
+    }
+
+    public function enviarAviso(Request $request, $id)
+    {
+        $pdfPath = null;
+        
+        if ($request->hasFile('arquivo')) {
+            $request->validate([
+                'arquivo' => 'mimes:pdf|max:2048',
+            ]);
+            $file = $request->file('arquivo');
+            $nomeArquivo = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('avisos', $nomeArquivo);
+            $pdfPath = storage_path('app/private/' . $path);
+        }
+
+        $passagem = Passagem::with('viagem.orcamento.cliente.user')->findOrFail($id);
+        $cliente = $passagem->viagem->orcamento->cliente;
+
+        if (!$cliente || !$cliente->user || !$cliente->user->email) {
+            return redirect()->route('passagens.index')->with('erro', 'Cliente ou usuário inválido, ou email não encontrado.');
+        }
+
+        $email = $cliente->user->email;
+        $nome = $cliente->nome;
+        $destino = $passagem->viagem->orcamento->destino;
+        $checkin = $passagem->checkin;
+        
+        Mail::to($email)->send(new AvisoViagemSemana(
+            $nome,
+            $destino,
+            $checkin,
+            $pdfPath
+        ));
+
+        return redirect()->route('passagens.index')->with('sucesso', 'Aviso enviado com sucesso!');
+    }
+
 }

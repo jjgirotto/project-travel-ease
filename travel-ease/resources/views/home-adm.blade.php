@@ -3,6 +3,10 @@
   <h2>Bem vindo {{Auth::user()->name}}! </h2>
   <div class="container mt-4">
 
+  <a href="{{ route('admin.exportar.relatorio') }}" class="btn btn-outline-success mb-4">
+        📄 Exportar Relatório CSV
+        </a>    
+
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card text-white bg-primary mb-3">
@@ -50,12 +54,13 @@
         </div>
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Mapa das Viagens</div>
+                <div class="card-header">Distribuição de Destinos</div>
                 <div class="card-body">
-                    <div id="mapa" style="height: 300px;"></div>
-                </div>
+                    <canvas id="graficoPizza" style="height: 300px;"></canvas>
             </div>
         </div>
+    </div>
+
     </div>
 
     <!-- Viagens em Breve -->
@@ -155,17 +160,38 @@
     });
 </script>
 
-<!-- Leaflet Mapa -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-    const mapa = L.map('mapa').setView([-15.77972, -47.92972], 4);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
-
-    @foreach($viagensProximas as $v)
-    L.marker([{{ $v->latitude }}, {{ $v->longitude }}])
-        .addTo(mapa)
-        .bindPopup('<strong>{{ addslashes($v->destino) }}</strong><br>{{ addslashes($v->viagem->orcamento->cliente->nome ?? '-') }}');
-    @endforeach
+    const ctxPizza = document.getElementById('graficoPizza').getContext('2d');
+    const destinosPizza = new Chart(ctxPizza, {
+        type: 'pie',
+        data: {
+            labels: {!! json_encode($destinosFrequentes->pluck('destino_normalizado')) !!},
+            datasets: [{
+                label: 'Destinos',
+                data: {!! json_encode($destinosFrequentes->pluck('total')) !!},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(199, 199, 199, 0.6)'
+                ],
+                borderColor: '#fff',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
 </script>
+
 @endsection
