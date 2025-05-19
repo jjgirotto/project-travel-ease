@@ -90,10 +90,13 @@ Route::middleware("auth")->group(function(){
         Route::get('/passagens/{pa}/edit', [PassagemController::class, 'edit'])->name('passagens.edit');
         Route::put('/passagens/{pa}', [PassagemController::class, 'update'])->name('passagens.update');
         Route::delete('/passagens/{pa}', [PassagemController::class, 'destroy'])->name('passagens.destroy');
+        Route::get('/passagens/{id}/avisos', [PassagemController::class, 'formAviso'])->name('passagens.avisos.form');
+        Route::post('/passagens/{id}/avisos', [PassagemController::class, 'enviarAviso'])->name('passagens.avisos.enviar');
     });
 
     Route::middleware([RoleAdmMiddleware::class])->group(function (){        
         Route::get('/home-adm', [AdminController::class, 'home'])->name('admin.home');
+        Route::get('/admin/exportar-relatorio', [App\Http\Controllers\AdminController::class, 'exportarRelatorio'])->name('admin.exportar.relatorio');
     });
 
     //rota acessível somente ao usuário CLI - somente a página home
