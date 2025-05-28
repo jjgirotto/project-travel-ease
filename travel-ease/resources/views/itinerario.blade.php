@@ -4,6 +4,12 @@
     <div class="container mt-4">
         <h2 class="mb-3"><i class="bi bi-airplane-engines"></i> Itinerário da Viagem</h2>
 
+        <div class="d-flex justify-content-start mb-3">
+            <a href="{{ route('itinerario.pdf', $viagem->id) }}" class="btn btn-outline-primary">
+                <i class="bi bi-file-earmark-pdf"></i> Gerar PDF
+            </a>
+        </div>
+
         <div class="mb-4">
             <h4>Informações da Viagem</h4>
             <p><strong>Origem:</strong> {{ $viagem->orcamento->origem }}</p>
@@ -26,5 +32,6 @@
         @endif
 
         <a href="{{ route('cliente.home') }}" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Voltar</a>
+    
     </div>
 @endsection

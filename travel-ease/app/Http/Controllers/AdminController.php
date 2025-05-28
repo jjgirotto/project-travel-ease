@@ -51,29 +51,40 @@ class AdminController extends Controller
 
         $clientes = Cliente::where('created_at', '>=', $inicioMes)->get();
 
-        $csv = "=== VIAGENS NO ULTIMO MES ===\n";
-        $csv .= "Cliente,Destino,Check-in\n";
+        $handle = fopen('php://temp', 'r+');
+        fwrite($handle, "\xEF\xBB\xBF");
+
+        fputcsv($handle, ['=== VIAGENS NO ÚLTIMO MÊS ===']);
+        fputcsv($handle, ['Cliente', 'Destino', 'Check-in']);
         foreach ($passagens as $p) {
             $clienteNome = $p->viagem->orcamento->cliente->nome ?? '-';
             $destino = $p->viagem->orcamento->destino ?? '-';
             $checkin = Carbon::parse($p->checkin)->format('d/m/Y');
-            $csv .= "{$clienteNome},{$destino},{$checkin}\n";
+            fputcsv($handle, [$clienteNome, $destino, $checkin]);
         }
 
-        $csv .= "\n=== ORÇAMENTOS NO ULTIMO MES ===\n";
-        $csv .= "Cliente,Destino,Data\n";
+        fputcsv($handle, []);
+
+        fputcsv($handle, ['=== ORÇAMENTOS NO ÚLTIMO MÊS ===']);
+        fputcsv($handle, ['Cliente', 'Destino', 'Data']);
         foreach ($orcamentos as $o) {
-            $csv .= "{$o->cliente->nome},{$o->destino}," . $o->created_at->format('d/m/Y') . "\n";
+            fputcsv($handle, [$o->cliente->nome, $o->destino, $o->created_at->format('d/m/Y')]);
         }
 
-        $csv .= "\n=== NOVOS CLIENTES NO ULTIMO MES ===\n";
-        $csv .= "Nome,Email,Data de Cadastro\n";
+        fputcsv($handle, []);
+
+        fputcsv($handle, ['=== NOVOS CLIENTES NO ÚLTIMO MÊS ===']);
+        fputcsv($handle, ['Nome', 'Email', 'Data de Cadastro']);
         foreach ($clientes as $c) {
-            $csv .= "{$c->nome},{$c->user->email}," . $c->created_at->format('d/m/Y') . "\n";
+            fputcsv($handle, [$c->nome, $c->user->email, $c->created_at->format('d/m/Y')]);
         }
+
+        rewind($handle);
+        $csv = stream_get_contents($handle);
+        fclose($handle);
 
         return Response::make($csv, 200, [
-            'Content-Type' => 'text/csv',
+            'Content-Type' => 'text/csv; charset=UTF-8',
             'Content-Disposition' => 'attachment; filename="relatorio_acompanhamento.csv"',
         ]);
     }

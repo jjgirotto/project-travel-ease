@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('principal')
+    <a href="{{ route('pacoteViagens.index') }}" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Voltar</a>
     <h2><i class="bi bi-search"></i> Consultar Pacote de Viagem</h2>
 
     <form method="post" action="/pacoteViagens/{{ $pacote-> id }}">

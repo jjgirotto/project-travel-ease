@@ -155,5 +155,4 @@ class PassagemController extends Controller
 
         return redirect()->route('passagens.index')->with('sucesso', 'Aviso enviado com sucesso!');
     }
-
 }

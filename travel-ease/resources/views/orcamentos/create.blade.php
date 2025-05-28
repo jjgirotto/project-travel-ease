@@ -2,6 +2,8 @@
 
 @section('principal')
 
+<a href="{{ route('orcamentos.index') }}" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Voltar</a>
+
 <h2><i class="bi bi-plus-circle"></i> Novo Orçamento</h2>
 
 <form method="post" action="/orcamentos">
@@ -51,7 +53,7 @@
 
         <div class="mb-3">
             <label for="valorTotal" class="form-label">Valor total:</label>
-            <input type="number" id="valorTotal" name="valorTotal" step="0.01" class="form-control">
+            <input type="number" id="valorTotal" name="valorTotal" step="0.01" class="form-control" readonly>
         </div>
 
         <div class="form-check mb-3">
@@ -84,3 +86,23 @@
 </form>
 
 @endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const qtdeMilhas = document.getElementById('qtdeMilhas');
+        const valorMilhas = document.getElementById('valorMilhas');
+        const valorTotal = document.getElementById('valorTotal');
+
+        function calcularTotal() {
+            const milhas = parseFloat(qtdeMilhas.value) || 0;
+            const valor = parseFloat(valorMilhas.value) || 0;
+            valorTotal.value = (milhas * valor).toFixed(2);
+        }
+
+        qtdeMilhas.addEventListener('input', calcularTotal);
+        valorMilhas.addEventListener('input', calcularTotal);
+    });
+</script>
+@endsection
+

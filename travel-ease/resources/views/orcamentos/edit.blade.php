@@ -2,6 +2,8 @@
 
 @section('principal')
 
+    <a href="{{ route('orcamentos.index') }}" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Voltar</a>
+
     <h2><i class="bi bi-pencil-square"></i> Editar Orçamento</h2>
     
     <form method="post" action="/orcamentos/{{ $orcamento->id }}">

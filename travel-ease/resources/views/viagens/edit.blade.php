@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('principal')
+    <a href="{{ route('viagens.index') }}" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Voltar</a>
  
      <h2><i class="bi bi-pencil-square"></i> Editar Viagem</h2>
      
