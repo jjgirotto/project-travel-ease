@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Viagem;
-//use PDF; 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class ItinerarioController extends Controller
 {
@@ -15,18 +16,11 @@ class ItinerarioController extends Controller
         return view('itinerario', compact('viagem'));
     }
 
-    /*public function emitirPdf($id)
+    public function gerarPdf(Viagem $viagem)
     {
-        $viagem = Viagem::with([
-            'orcamento.cliente', 
-            'passagem', 
-            'pacoteAtracoes.passeios', 
-            'pacoteAtracoes.restaurantes'
-        ])->findOrFail($id);
-
-        $pdf = PDF::loadView('itinerarios.emitir_pdf', compact('viagem'));
-        
-        // baixa o PDF com nome customizado
-        return $pdf->download("itinerario_viagem_{$viagem->id}.pdf");
-    }*/
+        $viagem->load('orcamento.cliente', 'passagem', 'pacote');
+        $pdf = PDF::loadView('itinerario-pdf', compact('viagem'))
+                ->setPaper('a4');
+        return $pdf->download('itinerario_viagem.pdf');
+    }  
 }

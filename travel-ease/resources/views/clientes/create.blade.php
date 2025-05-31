@@ -1,7 +1,8 @@
 @extends('layout')
 
 @section('principal')
- 
+
+    <a href="{{ route('clientes.index') }}" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Voltar</a>
      <h2><i class="bi bi-plus-circle"></i> Novo Cliente</h2>
      
      <form method="post" action="/clientes">

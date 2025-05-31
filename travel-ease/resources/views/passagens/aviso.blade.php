@@ -1,6 +1,8 @@
 @extends('layout')
 
 @section('principal')
+
+    <a href="{{ route('passagens.index') }}" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Voltar</a>
     <div class="mb-4">
         <h2><i class="bi bi-envelope-paper"></i> Enviar Aviso ao Cliente</h2>
         <p>Cliente: <strong>{{ $passagem->viagem->orcamento->cliente->nome }}</strong></p>

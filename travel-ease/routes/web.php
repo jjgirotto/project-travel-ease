@@ -105,6 +105,7 @@ Route::middleware("auth")->group(function(){
         Route::get('/sobre', [PageController::class, 'sobre'])->name('sobre');
         Route::get('/contato', [PageController::class, 'contato'])->name('contato');
         Route::get('/viagens/{viagem}/itinerario', [ItinerarioController::class, 'emitir'])->name('emitir.itinerario');
+        Route::get('/itinerario/{viagem}/pdf', [ItinerarioController::class, 'gerarPdf'])->name('itinerario.pdf');
     });
    
 });

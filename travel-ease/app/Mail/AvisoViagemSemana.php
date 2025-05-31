@@ -38,7 +38,7 @@ class AvisoViagemSemana extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('ads.jjgirotto@gmail.com', 'TravelEase'),
+            from: new Address('travelease.ag@gmail.com', 'TravelEase'),
             subject: 'Aviso: Sua viagem está próxima',
         );
     }

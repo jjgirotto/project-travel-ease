@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('principal')
+    <a href="{{ route('passagens.index') }}" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Voltar</a>
     <h2><i class="bi bi-search"></i> Consultar Passagens</h2>
 
     <form action="/passagens/{{ $passagem->id }}" method="post">

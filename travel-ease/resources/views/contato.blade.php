@@ -25,7 +25,7 @@
                 <h3>Informações de Contato</h3>
                 <ul class="list-unstyled">
                     <li>
-                        <strong>Email:</strong> <a href="mailto:contato@travelease.com" class="text-decoration-none">contato@travelease.com</a>
+                        <strong>Email:</strong> <a href="mailto:travelease.ag@gmail.com" class="text-decoration-none">travelease.ag@gmail.com</a>
                     </li>
                     <li>
                         <strong>Telefone:</strong> (11) 1234-5678
