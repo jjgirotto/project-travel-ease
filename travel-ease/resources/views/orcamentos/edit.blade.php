@@ -77,5 +77,23 @@
             <i class="bi bi-send-check"></i> Enviar
         </button>
     </form>
-            
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const qtdeMilhas = document.getElementById('qtdeMilhas');
+        const valorMilhas = document.getElementById('valorMilhas');
+        const valorTotal = document.getElementById('valorTotal');
+
+        function calcularTotal() {
+            const milhas = parseFloat(qtdeMilhas.value) || 0;
+            const valor = parseFloat(valorMilhas.value) || 0;
+            valorTotal.value = (milhas * valor).toFixed(2);
+        }
+
+        qtdeMilhas.addEventListener('input', calcularTotal);
+        valorMilhas.addEventListener('input', calcularTotal);
+    });
+</script>
 @endsection
